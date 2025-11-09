@@ -163,21 +163,32 @@ void drawGame() {
 
 void drawGameOver() {
   display.clearDisplay();
-
   display.drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SSD1306_WHITE);
 
-  display.setTextColor(SSD1306_WHITE);
   display.setTextSize(2);
-  display.setCursor(22, 16);
-  display.println(F("Game Over"));
+  display.setTextColor(SSD1306_WHITE);
+
+  const char* msg = "Game Over";
+  int16_t x1, y1;
+  uint16_t w, h;
+  display.getTextBounds(msg, 0, 0, &x1, &y1, &w, &h);
+  int centerX = (SCREEN_WIDTH - w) / 2;
+  int centerY = 18;
+  display.setCursor(centerX, centerY);
+  display.println(msg);
 
   display.setTextSize(1);
-  display.setCursor(18, 40);
-  display.print(F("Score: "));
-  display.println(score);
+  String scoreText = "Score: " + String(score);
+  display.getTextBounds(scoreText, 0, 0, &x1, &y1, &w, &h);
+  centerX = (SCREEN_WIDTH - w) / 2;
+  display.setCursor(centerX, 42);
+  display.println(scoreText);
 
-  display.setCursor(10, 52);
-  display.println(F("Press stick to retry"));
+  const char* retry = "Press stick to retry";
+  display.getTextBounds(retry, 0, 0, &x1, &y1, &w, &h);
+  centerX = (SCREEN_WIDTH - w) / 2;
+  display.setCursor(centerX, 54);
+  display.println(retry);
 
   display.display();
 }
@@ -200,7 +211,6 @@ void setup() {
 void loop() {
   unsigned long now = millis();
 
-  // Fixed frame rate
   if (now - lastFrame < FRAME_MS) return;
   lastFrame = now;
 
