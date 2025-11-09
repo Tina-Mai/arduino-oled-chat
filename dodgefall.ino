@@ -163,16 +163,22 @@ void drawGame() {
 
 void drawGameOver() {
   display.clearDisplay();
+
+  display.drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SSD1306_WHITE);
+
   display.setTextColor(SSD1306_WHITE);
   display.setTextSize(2);
   display.setCursor(22, 16);
   display.println(F("Game Over"));
+
   display.setTextSize(1);
   display.setCursor(18, 40);
   display.print(F("Score: "));
   display.println(score);
+
   display.setCursor(10, 52);
   display.println(F("Press stick to retry"));
+
   display.display();
 }
 
